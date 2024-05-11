@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: order
+  name: order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: order
+    spec:
+      containers:
+      - image: shrikumarudupa/order-service
+        name: order-service
+        ports:
+          - containerPort: 8091
+        resources: {}
+status: {}
+----
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: order
+  name: order
+spec:
+  ports:
+  - port: 8091
+    protocol: TCP
+    targetPort: 8091
+  selector:
+    app: order
+  type: NodePort
+status:
+  loadBalancer: {}
